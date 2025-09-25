@@ -1,9 +1,9 @@
 variable "name_prefix" {
-  type = string
+  type    = string
   default = "cmtr-zz733vvq-mod8"
 }
 variable "location" {
-  type = string
+  type    = string
   default = "westeurope"
 }
 variable "acr_sku" {

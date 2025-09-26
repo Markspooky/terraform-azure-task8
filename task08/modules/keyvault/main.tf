@@ -5,7 +5,6 @@ resource "azurerm_key_vault" "this" {
   tenant_id                       = var.tenant_id
   sku_name                        = "standard"
   purge_protection_enabled        = false
-  soft_delete_enabled             = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
   enabled_for_deployment          = true
@@ -19,9 +18,9 @@ resource "azurerm_key_vault_access_policy" "current_user" {
   object_id    = var.current_object_id
 
   secret_permissions = [
-    "get",
-    "list",
-    "set",
-    "delete"
+    "Get",
+    "List",
+    "Set",
+    "Delete"
   ]
 }

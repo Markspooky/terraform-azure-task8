@@ -8,6 +8,6 @@ output "redis_hostname" {
   value = data.azurerm_redis_cache.existing.hostname
 }
 output "redis_primary_key" {
-  value     = azurerm_redis_cache_primary_key.primary.primary_key
   sensitive = true
+  value     = azurerm_redis_cache_primary_key.primary.primary_key
 }

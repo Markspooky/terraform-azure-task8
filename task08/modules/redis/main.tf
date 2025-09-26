@@ -6,10 +6,14 @@ resource "azurerm_redis_cache" "this" {
   family              = "C"
   sku_name            = "Basic"
   minimum_tls_version = "1.2"
-  enable_non_ssl_port = false
 
   tags = var.tags
 }
+
+redis_configuration {
+  enable_non_ssl_port = false
+}
+
 
 data "azurerm_redis_cache" "existing" {
   name                = azurerm_redis_cache.this.name

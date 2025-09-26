@@ -15,12 +15,6 @@ resource "azurerm_kubernetes_cluster" "this" {
     type = "SystemAssigned"
   }
 
-  addon_profile {
-    azure_keyvault_secrets_provider {
-      enabled = true
-    }
-  }
-
   tags = var.tags
 }
 
@@ -39,8 +33,8 @@ resource "azurerm_key_vault_access_policy" "aks_to_kv" {
   object_id    = azurerm_kubernetes_cluster.this.identity[0].principal_id
 
   secret_permissions = [
-    "get",
-    "list"
+    "Get",
+    "List"
   ]
 
   depends_on = [azurerm_kubernetes_cluster.this]

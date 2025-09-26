@@ -10,3 +10,13 @@ variable "image_tag" { type = string }
 variable "keyvault_id" { type = string }
 variable "secret_redis_hostname_id" { type = string }
 variable "secret_redis_primary_key_id" { type = string }
+variable "redis_hostname" {
+  type = string
+}
+
+variable "redis_primary_key" {
+  type = string
+}
+variable "name" {
+  type = string
+}

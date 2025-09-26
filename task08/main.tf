@@ -51,6 +51,7 @@ module "aks" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   acr_id              = module.acr.acr_id
   acr_login_server    = module.acr.acr_login_server
+  aci_identity_id     = module.aci.identity_id
 }
 
 module "aci" {
@@ -60,13 +61,15 @@ module "aci" {
   name_prefix                 = var.name_prefix
   tags                        = local.tags
   acr_login_server            = module.acr.acr_login_server
-  acr_username                = azurerm_container_registry.this.admin_username
-  acr_password                = azurerm_container_registry.this.admin_password
+  acr_username                = module.acr.admin_username
+  acr_password                = module.acr.admin_password
   image_name                  = "${var.name_prefix}-app"
   image_tag                   = "latest" # vagy a Task futás ID
   keyvault_id                 = module.keyvault.keyvault_id
   secret_redis_hostname_id    = module.redis.redis_hostname_secret_id
   secret_redis_primary_key_id = module.redis.redis_primary_key_secret_id
+  redis_hostname              = module.redis.redis_hostname
+  redis_primary_key           = module.redis.redis_primary_key
 }
 
 data "azurerm_client_config" "current" {}

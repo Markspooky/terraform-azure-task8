@@ -25,13 +25,3 @@ resource "azurerm_container_registry_task" "build_task" {
   depends_on = [azurerm_container_registry.this]
 }
 
-
-resource "azurerm_container_registry_task_schedule" "daily" {
-  name                       = "${var.name_prefix}-build-sched"
-  container_registry_task_id = azurerm_container_registry_task.build_task.id
-  status                     = "Enabled"
-  recurrence {
-    frequency = "Day"
-    interval  = 1
-  }
-}

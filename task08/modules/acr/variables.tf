@@ -9,3 +9,6 @@ variable "dockerfile_path" {
 }
 variable "context_path" { type = string }
 variable "image_name" { type = string }
+variable "sku" {
+  type = string
+}

@@ -20,6 +20,8 @@ resource "azurerm_container_group" "this" {
       CREATOR        = "ACI"
       REDIS_PORT     = "6380"
       REDIS_SSL_MODE = "true"
+      REDIS_URL      = var.redis_hostname
+      REDIS_PWD      = var.redis_primary_key
     }
 
     secure_environment_variables = {
@@ -42,4 +44,9 @@ resource "azurerm_container_group" "this" {
   }
 
   tags = var.tags
+}
+resource "azurerm_user_assigned_identity" "this" {
+  name                = "${var.name}-identity"
+  resource_group_name = var.resource_group_name
+  location            = var.location
 }

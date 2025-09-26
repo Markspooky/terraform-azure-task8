@@ -8,37 +8,28 @@ resource "azurerm_redis_cache" "this" {
   minimum_tls_version = "1.2"
 
   tags = var.tags
-}
 
-redis_configuration {
-  enable_non_ssl_port = false
+  redis_configuration {
+    enable_non_ssl_port = false
+  }
 }
-
 
 data "azurerm_redis_cache" "existing" {
   name                = azurerm_redis_cache.this.name
   resource_group_name = var.resource_group_name
+
+  depends_on = [azurerm_redis_cache.this]
 }
 
 resource "azurerm_key_vault_secret" "redis_hostname" {
   name         = "redis-hostname"
   value        = data.azurerm_redis_cache.existing.hostname
   key_vault_id = var.keyvault_id
-
-  depends_on = [azurerm_redis_cache.this]
-}
-
-
-resource "azurerm_redis_cache_primary_key" "primary" {
-  name                = "primary"
-  resource_group_name = var.resource_group_name
-  name_redis_cache    = azurerm_redis_cache.this.name
 }
 
 resource "azurerm_key_vault_secret" "redis_primary_key" {
   name         = "redis-primary-key"
-  value        = azurerm_redis_cache_primary_key.primary.primary_key
+  value        = data.azurerm_redis_cache.existing.primary_access_key
   key_vault_id = var.keyvault_id
-
-  depends_on = [azurerm_redis_cache_primary_key.primary]
 }
+

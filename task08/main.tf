@@ -70,6 +70,7 @@ module "aci" {
   secret_redis_primary_key_id = module.redis.redis_primary_key_secret_id
   redis_hostname              = module.redis.redis_hostname
   redis_primary_key           = module.redis.redis_primary_key
+  name                        = "aci-container"
 }
 
 data "azurerm_client_config" "current" {}
@@ -115,4 +116,10 @@ resource "kubectl_manifest" "k8s_secret_provider" {
 resource "kubectl_manifest" "k8s_service" {
   yaml_body  = file("${path.module}/k8s-manifests/service.yaml")
   depends_on = [kubectl_manifest.k8s_deploy]
+}
+data "kubernetes_service" "redis_flask" {
+  metadata {
+    name      = "redis-flask-app-service"
+    namespace = "default"
+  }
 }

@@ -55,22 +55,23 @@ module "aks" {
 }
 
 module "aci" {
-  source                      = "./modules/aci"
-  resource_group_name         = azurerm_resource_group.main.name
-  location                    = azurerm_resource_group.main.location
-  name_prefix                 = var.name_prefix
-  tags                        = local.tags
-  acr_login_server            = module.acr.acr_login_server
-  acr_username                = module.acr.admin_username
-  acr_password                = module.acr.admin_password
-  image_name                  = "${var.name_prefix}-app"
-  image_tag                   = "latest" # vagy a Task futás ID
-  keyvault_id                 = module.keyvault.keyvault_id
+  source              = "./modules/aci"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  name_prefix         = var.name_prefix
+  tags                = local.tags
+  acr_login_server    = module.acr.acr_login_server
+  acr_username        = module.acr.admin_username
+  acr_password        = module.acr.admin_password
+  image_name          = "${var.name_prefix}-app"
+  image_tag           = "latest" # vagy valami változó
+  keyvault_id         = module.keyvault.keyvault_id
+  name                = "aci-container"
+
   secret_redis_hostname_id    = module.redis.redis_hostname_secret_id
   secret_redis_primary_key_id = module.redis.redis_primary_key_secret_id
   redis_hostname              = module.redis.redis_hostname
   redis_primary_key           = module.redis.redis_primary_key
-  name                        = "aci-container"
 }
 
 data "azurerm_client_config" "current" {}

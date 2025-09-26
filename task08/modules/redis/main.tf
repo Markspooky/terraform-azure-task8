@@ -9,16 +9,12 @@ resource "azurerm_redis_cache" "this" {
 
   tags = var.tags
 
-  redis_configuration {
-    enable_non_ssl_port = false
-  }
 }
 
 data "azurerm_redis_cache" "existing" {
   name                = azurerm_redis_cache.this.name
   resource_group_name = var.resource_group_name
-
-  depends_on = [azurerm_redis_cache.this]
+  depends_on          = [azurerm_redis_cache.this]
 }
 
 resource "azurerm_key_vault_secret" "redis_hostname" {

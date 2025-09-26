@@ -16,6 +16,7 @@ resource "azurerm_container_group" "this" {
       protocol = "TCP"
     }
 
+
     environment_variables = {
       CREATOR        = "ACI"
       REDIS_PORT     = "6380"
@@ -23,25 +24,15 @@ resource "azurerm_container_group" "this" {
       REDIS_URL      = var.redis_hostname
       REDIS_PWD      = var.redis_primary_key
     }
+  }
+  image_registry_credential {
+    server   = var.acr_login_server
+    username = var.acr_username
+    password = var.acr_password
 
-    secure_environment_variables = {
-      REDIS_URL = azurerm_key_vault_secret.redis_hostname.value
-      REDIS_PWD = azurerm_key_vault_secret.redis_primary_key.value
-    }
-
-
-    image_registry_credential {
-      server   = var.acr_login_server
-      username = var.acr_username
-      password = var.acr_password
-    }
   }
 
   ip_address_type = "Public"
-  ports {
-    port     = 8080
-    protocol = "TCP"
-  }
 
   tags = var.tags
 }

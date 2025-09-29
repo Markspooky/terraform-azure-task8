@@ -121,4 +121,6 @@ data "kubernetes_service" "redis_flask" {
     name      = "redis-flask-app-service"
     namespace = "default"
   }
+
+  depends_on = [kubectl_manifest.k8s_service]
 }

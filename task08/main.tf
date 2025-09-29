@@ -45,7 +45,7 @@ module "aks" {
   name_prefix         = var.name_prefix
   tags                = local.tags
   node_count          = 1
-  node_size           = "Standard_DS2_v2"
+  node_size           = "Standard_B2s"
   keyvault_id         = module.keyvault.keyvault_id
   keyvault_name       = module.keyvault.keyvault_name
   tenant_id           = data.azurerm_client_config.current.tenant_id

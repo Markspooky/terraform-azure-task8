@@ -76,21 +76,19 @@ module "aci" {
 
 data "azurerm_client_config" "current" {}
 
-
 provider "kubernetes" {
-  host                   = module.aks.kube_admin_config["host"]
-  client_certificate     = base64decode(module.aks.kube_admin_config["client_certificate"])
-  client_key             = base64decode(module.aks.kube_admin_config["client_key"])
-  cluster_ca_certificate = base64decode(module.aks.kube_admin_config["cluster_ca_certificate"])
+  host                   = module.aks.kube_admin_config.host
+  client_certificate     = base64decode(module.aks.kube_admin_config.client_certificate)
+  client_key             = base64decode(module.aks.kube_admin_config.client_key)
+  cluster_ca_certificate = base64decode(module.aks.kube_admin_config.cluster_ca_certificate)
 }
 
 provider "kubectl" {
-  host                   = module.aks.kube_admin_config["host"]
-  client_certificate     = base64decode(module.aks.kube_admin_config["client_certificate"])
-  client_key             = base64decode(module.aks.kube_admin_config["client_key"])
-  cluster_ca_certificate = base64decode(module.aks.kube_admin_config["cluster_ca_certificate"])
+  host                   = module.aks.kube_admin_config.host
+  client_certificate     = base64decode(module.aks.kube_admin_config.client_certificate)
+  client_key             = base64decode(module.aks.kube_admin_config.client_key)
+  cluster_ca_certificate = base64decode(module.aks.kube_admin_config.cluster_ca_certificate)
 }
-
 
 resource "kubectl_manifest" "k8s_deploy" {
   yaml_body = templatefile("${path.module}/k8s-manifests/deployment.yaml.tftpl", {

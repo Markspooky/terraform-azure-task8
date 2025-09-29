@@ -2,7 +2,7 @@ output "aks_cluster_id" {
   value = azurerm_kubernetes_cluster.this.id
 }
 output "kube_admin_config" {
-  value     = azurerm_kubernetes_cluster.this.kube_admin_config[0]
+  value     = azurerm_kubernetes_cluster.this.kube_admin_config
   sensitive = true
 }
 output "kube_config" {
